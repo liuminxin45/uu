@@ -35,7 +35,7 @@ npm run uu -- memory recall --fixture ./fixtures/demo.json --query 发布
 | `tools/uu.ts`、`bin` | 本次 M1 的 checkout CLI | 否 |
 | `tests` | 协议、生命周期故障、进程、权限和包消费验收 | 否 |
 
-`@uu/core` 当前为私有 Git 依赖包；入口为 `.`、`./protocol` 和 `./context`。消费者按完整 Git commit 固定版本，Git 安装的 prepare 在 Node 24.19.0 下生成 JS 与声明；不需要本机另一个源码 checkout 或绝对路径。上下文消费者直接使用 `./context`，避免加载 Memory 生命周期的 Node 依赖。支持 Node 24 的同步 CommonJS 消费，并为 PHD 的旧 Node 类型解析模式提供声明映射；没有旧包名或旧本地模块的兼容出口。
+`@uu/core` 当前为私有 Git 依赖包；入口为 `.`、`./protocol` 和 `./context`。消费者按完整 Git commit 固定版本，直接使用仓库中经校验的 JS 与声明发行文件；支持 `--ignore-scripts` 安装，不在宿主安装时编译，也不需要本机另一个源码 checkout 或绝对路径。发行文件与源码由 uu 同一个 owner 维护，验收先在独立临时输出目录重新编译并逐字比较，防止提交过期产物。上下文消费者直接使用 `./context`，避免加载 Memory 生命周期的 Node 依赖。支持 Node 24 的同步 CommonJS 消费，并为 PHD 的旧 Node 类型解析模式提供声明映射；没有旧包名或旧本地模块的兼容出口。
 
 [上下文合同](docs/CONTEXT.md) 定义宿主边界与迁移一致性。[Memory 协议](docs/PROTOCOL.md) 定义身份、版本、预算、收据及关闭语义。[M1 验收记录](docs/validation/m1-2026-10-16/validation.json) 保留该阶段的历史范围。
 

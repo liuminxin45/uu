@@ -1,6 +1,6 @@
 {
   "name": "@uu/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "type": "module",
   "license": "UNLICENSED",
@@ -36,12 +36,12 @@
   },
   "scripts": {
     "build": "node tools/check-node.mjs && tsc -p tsconfig.json",
-    "prepare": "npm run build",
     "typecheck": "node tools/check-node.mjs && tsc -p tsconfig.json --noEmit",
     "test": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "check:boundaries": "node tools/check-boundaries.mjs",
     "check:package": "node tools/check-package.mjs",
-    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:package",
+    "check:distribution": "node tools/check-distribution.mjs",
+    "verify": "npm run typecheck && npm run check:distribution && npm test && npm run check:boundaries && npm run check:package",
     "uu": "node bin/uu.mjs"
   },
   "devDependencies": {

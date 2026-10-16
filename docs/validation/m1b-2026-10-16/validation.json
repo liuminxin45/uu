@@ -4,7 +4,7 @@
   "validatedOn": "2026-10-16",
   "node": "24.19.0",
   "repository": "https://github.com/liuminxin45/uu.git",
-  "package": { "name": "@uu/core", "version": "0.2.0", "contextEntry": "@uu/core/context" },
+  "package": { "name": "@uu/core", "version": "0.2.1", "contextEntry": "@uu/core/context" },
   "verification": {
     "command": "npm run verify",
     "exitCode": 0,
@@ -14,6 +14,7 @@
     "nodePermissionBoundary": "passed; own checkout readable; no fs-write permission",
     "coreBoundary": "passed; 8 compiled runtime modules, 5 context modules, zero runtime dependencies",
     "contextBoundary": "no IO, Memory import, product name, Host RPC, environment, logging or process access",
+    "distribution": "versioned compiled core; separately rebuilt and compared; no install-time prepare required",
     "packageDryRun": "passed; 20 files; compiled JS, declarations and documents only"
   },
   "parity": {
