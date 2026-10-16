@@ -65,17 +65,19 @@ test('CLI succeeds with Node filesystem permissions allowing only its own checko
 test('compiled contract imports from node_modules with no PHD dependency or TypeScript runtime',async()=>{
   const directory=temporary();
   try {
-    const pkg=path.join(directory,'node_modules','@uu','memory-contract');fs.mkdirSync(pkg,{recursive:true});
+    const pkg=path.join(directory,'node_modules','@uu','core');fs.mkdirSync(pkg,{recursive:true});
     fs.cpSync(path.join(root,'build/src'),path.join(pkg,'build/src'),{recursive:true});
     const manifest=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));delete manifest.devDependencies;
     fs.writeFileSync(path.join(pkg,'package.json'),JSON.stringify(manifest));
     const consumer=path.join(directory,'consumer.mjs');
-    fs.writeFileSync(consumer,"import {METHODS,MemorySession,VERSION} from '@uu/memory-contract';import {PROTOCOL} from '@uu/memory-contract/protocol';if(METHODS.length!==13||typeof MemorySession!=='function'||VERSION!==1||PROTOCOL!=='uu.memory')throw Error('BAD_EXPORT');console.log('passed');");
+    fs.writeFileSync(consumer,"import {METHODS,MemorySession,VERSION} from '@uu/core';import {PROTOCOL} from '@uu/core/protocol';import {compileUuPrompt} from '@uu/core/context';if(METHODS.length!==13||typeof MemorySession!=='function'||VERSION!==1||PROTOCOL!=='uu.memory'||compileUuPrompt({profile:'inference',turn:{text:'fixture'}}).manifest.length!==8)throw Error('BAD_EXPORT');console.log('passed');");
     const response=await new Promise((resolve,reject)=>{const p=spawn(process.execPath,['--permission',`--allow-fs-read=${directory}`,consumer],{cwd:directory,windowsHide:true});let stdout='',stderr='';p.stdout.on('data',x=>stdout+=x);p.stderr.on('data',x=>stderr+=x);p.on('error',reject);p.on('close',code=>resolve({code,stdout,stderr}))});
     assert.equal(response.code,0,response.stderr);assert.equal(response.stdout.trim(),'passed');
     const typedConsumer=path.join(directory,'consumer.mts');
-    fs.writeFileSync(typedConsumer,`import {METHODS,MemorySession,VERSION,type Request} from '@uu/memory-contract';
-import {PROTOCOL} from '@uu/memory-contract/protocol';
+    fs.writeFileSync(typedConsumer,`import {METHODS,MemorySession,VERSION,type Request} from '@uu/core';
+import {PROTOCOL} from '@uu/core/protocol';
+import {compileUuPrompt,type UuInvocation} from '@uu/core/context';
+const invocation:UuInvocation={profile:'task',turn:{text:'fixture'}};const plan=compileUuPrompt(invocation);
 const supported:readonly string[]=METHODS; const version:1=VERSION;const protocol:'uu.memory'=PROTOCOL;
 declare const request:Request<'recall'>; const query:string=request.params.query;
 // @ts-expect-error write fields are not valid recall parameters
@@ -92,4 +94,14 @@ const sessionType:typeof MemorySession=MemorySession;
     });
     assert.equal(typed.code,0,typed.output);
   }finally{cleanup(directory)}
+});
+
+test('standalone context inspection has eight populated layers and no product or source-body leakage',async()=>{
+  const fixture=path.join(root,'fixtures/context-demo.json');
+  const response=await run(['context','inspect','--fixture',fixture,'--full'],{nodeArgs:['--permission',`--allow-fs-read=${root}`]});
+  assert.equal(response.code,0,response.stderr);assert.equal((response.stdout.match(/\| L[1-8] /g)||[]).length,8);
+  assert.doesNotMatch(response.stdout,/PHD|phabricator|Codex|SOURCE_BODY|FIXTURE_SECRET_FOR_REDACTION/);
+  assert.match(response.stdout,/REDACTED/);assert.doesNotMatch(response.stderr,/合成层|SOURCE_BODY|FIXTURE_SECRET/);
+  const missing=await run(['context','inspect']);assert.equal(json(missing).cliError.code,'INVALID_REQUEST');
+  const wrongKind=await run(['context','inspect','--fixture',fixturePath]);assert.equal(json(wrongKind).cliError.code,'INVALID_REQUEST');
 });

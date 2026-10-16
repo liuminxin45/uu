@@ -1,6 +1,7 @@
 # uu engineering boundaries
 
-- Current milestone is M1: portable Memory protocol, provider lifecycle and isolated synthetic fixtures. Production readers, storage writers, migrations and PHD installation are outside this milestone.
+- Current milestone is M1b: move the existing pure eight-layer context core into uu and let PHD consume one pinned package. M1 Memory protocol and isolated fixtures remain available. Production readers, storage writers, migrations and PHD installation are outside this milestone.
+- Context is an independent entry with no runtime dependencies, IO, product names, Host RPC, business configuration or native-process supervision. Product presentation and source reads belong in each Host; do not restore old compiler modules as compatibility exports.
 - Core exports must not import PHD, Electron, React, database libraries, test-support or filesystem/network access. Identity and authorization come from a trusted Host grant; a request cannot expand that grant.
 - Use Node 24.19.0. Compile TypeScript to JavaScript for consumers; do not publish TypeScript source that requires runtime type stripping in node_modules.
 - No production data path defaults, private data-root environment variables, legacy protocol aliases, automatic fallback or hidden writers. Synthetic fixture loading stays outside the core package and rejects paths outside the explicitly isolated fixture roots.

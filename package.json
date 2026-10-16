@@ -1,6 +1,6 @@
 {
-  "name": "@uu/memory-contract",
-  "version": "0.1.0",
+  "name": "@uu/core",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "license": "UNLICENSED",
@@ -10,20 +10,33 @@
   "exports": {
     ".": {
       "types": "./build/src/index.d.ts",
-      "import": "./build/src/index.js"
+      "default": "./build/src/index.js"
     },
     "./protocol": {
       "types": "./build/src/protocol.d.ts",
-      "import": "./build/src/protocol.js"
+      "default": "./build/src/protocol.js"
+    },
+    "./context": {
+      "types": "./build/src/context/index.d.ts",
+      "default": "./build/src/context/index.js"
     }
   },
   "files": [
     "build/src",
     "README.md",
-    "docs/PROTOCOL.md"
+    "docs/PROTOCOL.md",
+    "docs/CONTEXT.md"
   ],
+  "types": "./build/src/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "context": ["build/src/context/index.d.ts"],
+      "protocol": ["build/src/protocol.d.ts"]
+    }
+  },
   "scripts": {
     "build": "node tools/check-node.mjs && tsc -p tsconfig.json",
+    "prepare": "npm run build",
     "typecheck": "node tools/check-node.mjs && tsc -p tsconfig.json --noEmit",
     "test": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "check:boundaries": "node tools/check-boundaries.mjs",

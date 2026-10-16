@@ -1,0 +1,52 @@
+{
+  "milestone": "M1b",
+  "status": "passed-isolated-core",
+  "validatedOn": "2026-10-16",
+  "node": "24.19.0",
+  "repository": "https://github.com/liuminxin45/uu.git",
+  "package": { "name": "@uu/core", "version": "0.2.0", "contextEntry": "@uu/core/context" },
+  "verification": {
+    "command": "npm run verify",
+    "exitCode": 0,
+    "tests": { "passed": 56, "failed": 0, "skipped": 0, "cancelled": 0 },
+    "typecheck": "passed",
+    "isolatedConsumerRuntimeAndTypes": "passed",
+    "nodePermissionBoundary": "passed; own checkout readable; no fs-write permission",
+    "coreBoundary": "passed; 8 compiled runtime modules, 5 context modules, zero runtime dependencies",
+    "contextBoundary": "no IO, Memory import, product name, Host RPC, environment, logging or process access",
+    "packageDryRun": "passed; 20 files; compiled JS, declarations and documents only"
+  },
+  "parity": {
+    "baselineRepository": "https://github.com/liuminxin45/phd",
+    "baselineCommit": "06a722c560a611926fe574b3d3827a5f9a26ac9b",
+    "fixture": "fixtures/context-parity.json",
+    "syntheticOnly": true,
+    "cases": 9,
+    "comparison": "exact plan JSON bytes, summary/full inspection strings, or expected error code",
+    "hostPresentation": "provided as fixture data; no product defaults in core",
+    "oldCompilerRetained": false
+  },
+  "cli": {
+    "command": "npm run uu -- context inspect --fixture ./fixtures/context-demo.json --full",
+    "layers": 8,
+    "populatedLayers": 8,
+    "modelCalled": false,
+    "sourceBodiesInInspection": false,
+    "credentialsMasked": true,
+    "promptOrBodyInDiagnostics": false
+  },
+  "ownership": {
+    "uu": "types, pure compiler, inspection, references and bounded read scheduling",
+    "host": "authorized source reads, product presentation, business bundle mapping, project IO, settings, credentials, diagnostics, process lifecycle and native sessions",
+    "productionDataAccess": false,
+    "productionInstallationChanged": false,
+    "persistentMemoryWriter": false,
+    "legacyCompatibilityModule": false
+  },
+  "notClaimed": [
+    "PHD Git dependency and integration acceptance; recorded separately in PHD after this core commit",
+    "M2 legacy data access or M3 persistent writes",
+    "formal installed PHD migration",
+    "complete extraction of the product-specific Codex driver"
+  ]
+}

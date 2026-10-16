@@ -4,6 +4,8 @@ import { fail, METHODS, PROTOCOL, safeCode, validateRequest, VERSION, WRITE_METH
 import type { Request, SessionIdentity } from '../src/protocol.js';
 import { FixtureProvider, FIXTURE_GRANT, READ_METHODS } from '../test-support/fixture-provider.js';
 import { loadFixture } from '../test-support/fixture-loader.js';
+import {loadContextFixture} from '../test-support/context-fixture.js';
+import {compileUuPrompt,renderUuInspection} from '../src/context/index.js';
 
 function log(event: Record<string, unknown>): void { try { process.stderr.write(JSON.stringify(event) + '\n'); } catch { /* stderr is best effort. */ } }
 async function stdin(): Promise<unknown> {
@@ -28,9 +30,13 @@ async function main(): Promise<void> {
   log({ event: 'started', operation: 'cli', requestId });
   try {
     if (command === 'doctor' && !operation) {
-      console.log(JSON.stringify({ milestone: 'M1', node: process.versions.node, protocol: PROTOCOL, version: VERSION, productionAccess: false, persistentWrites: false, runtimeDependencies: 0 }));
+      console.log(JSON.stringify({ milestone: 'M1b', node: process.versions.node, protocol: PROTOCOL, version: VERSION, contextLayers:8, productionAccess: false, persistentWrites: false, runtimeDependencies: 0 }));
     } else if (command === 'protocol' && !operation) {
       console.log(JSON.stringify({ protocol: PROTOCOL, version: VERSION, methods: METHODS, writeMethods: [...WRITE_METHODS], fixtureCapabilities: READ_METHODS, legacyAliases: [], transport: 'Host-owned; M1 fixture CLI only' }));
+    } else if(command==='context'&&operation==='inspect') {
+      if(args.length<2||args[0]!=='--fixture'||!args[1]||args.length>3||(args.length===3&&args[2]!=='--full'))fail('INVALID_REQUEST');
+      const plan=compileUuPrompt(loadContextFixture(args[1]));
+      console.log(renderUuInspection(plan,args[2]==='--full'));
     } else {
       if (command !== 'memory' || !['snapshot', 'recall', 'health', 'listSources', 'request'].includes(operation ?? '')) fail('INVALID_REQUEST');
       const options = new Map<string, string>();
