@@ -1,0 +1,38 @@
+{
+  "name": "@uu/memory-contract",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=24.19.0 <25"
+  },
+  "exports": {
+    ".": {
+      "types": "./build/src/index.d.ts",
+      "import": "./build/src/index.js"
+    },
+    "./protocol": {
+      "types": "./build/src/protocol.d.ts",
+      "import": "./build/src/protocol.js"
+    }
+  },
+  "files": [
+    "build/src",
+    "README.md",
+    "docs/PROTOCOL.md"
+  ],
+  "scripts": {
+    "build": "node tools/check-node.mjs && tsc -p tsconfig.json",
+    "typecheck": "node tools/check-node.mjs && tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
+    "check:boundaries": "node tools/check-boundaries.mjs",
+    "check:package": "node tools/check-package.mjs",
+    "verify": "npm run typecheck && npm test && npm run check:boundaries && npm run check:package",
+    "uu": "node bin/uu.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "5.9.3"
+  }
+}

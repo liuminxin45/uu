@@ -1,0 +1,18 @@
+{
+  "kind": "uu-m1-synthetic",
+  "version": 1,
+  "authorityId": "fixture-demo",
+  "sourceIdentity": "fixture-source-v1",
+  "entries": [
+    { "id": "fixture-note", "version": "v1", "target": "memory", "scope": { "principalId": "fixture-user", "namespace": "fixture-space", "projectId": "fixture-project" }, "classification": "company-internal", "text": "合成项目约定：发布前先验证隔离夹具。", "provenance": [{ "authorityId": "fixture-demo", "sourceId": "fixture-chat", "itemId": "fixture-1", "revision": "v1" }] },
+    { "id": "fixture-preference", "version": "v1", "target": "user", "scope": { "principalId": "fixture-user", "namespace": "fixture-space" }, "classification": "personal", "text": "合成偏好：使用简体中文。", "provenance": [{ "authorityId": "fixture-demo", "sourceId": "fixture-notes", "itemId": "fixture-2", "revision": "v1" }] }
+  ],
+  "records": [
+    { "ref": { "authorityId": "fixture-demo", "sourceId": "fixture-chat", "itemId": "fixture-1", "revision": "v1" }, "scope": { "principalId": "fixture-user", "namespace": "fixture-space", "projectId": "fixture-project" }, "classification": "company-internal", "text": "发布前先验证隔离夹具，失败不切换正式链路。", "occurredAt": "2026-01-01T00:00:00.000Z", "entities": [{ "id": "fixture-release", "name": "合成发布项目" }], "deleted": false },
+    { "ref": { "authorityId": "fixture-demo", "sourceId": "fixture-notes", "itemId": "fixture-2", "revision": "v1" }, "scope": { "principalId": "fixture-user", "namespace": "fixture-space" }, "classification": "personal", "text": "用户明确保存的合成偏好：使用简体中文。", "occurredAt": "2026-01-02T00:00:00.000Z", "entities": [], "deleted": false },
+    { "ref": { "authorityId": "fixture-demo", "sourceId": "fixture-chat", "itemId": "fixture-other-project", "revision": "v1" }, "scope": { "principalId": "fixture-user", "namespace": "fixture-space", "projectId": "fixture-other" }, "classification": "company-internal", "text": "发布 OTHER_PROJECT_SENTINEL", "occurredAt": "2026-01-03T00:00:00.000Z", "entities": [], "deleted": false },
+    { "ref": { "authorityId": "fixture-demo", "sourceId": "fixture-chat", "itemId": "fixture-other-user", "revision": "v1" }, "scope": { "principalId": "fixture-other-user", "namespace": "fixture-space", "projectId": "fixture-project" }, "classification": "personal", "text": "发布 OTHER_USER_SENTINEL", "occurredAt": "2026-01-03T00:00:00.000Z", "entities": [], "deleted": false },
+    { "ref": { "authorityId": "fixture-demo", "sourceId": "fixture-chat", "itemId": "fixture-restricted", "revision": "v1" }, "scope": { "principalId": "fixture-user", "namespace": "fixture-space", "projectId": "fixture-project" }, "classification": "restricted", "text": "发布 RESTRICTED_SENTINEL", "occurredAt": "2026-01-03T00:00:00.000Z", "entities": [], "deleted": false },
+    { "ref": { "authorityId": "fixture-demo", "sourceId": "fixture-chat", "itemId": "fixture-deleted", "revision": "v2" }, "scope": { "principalId": "fixture-user", "namespace": "fixture-space", "projectId": "fixture-project" }, "classification": "company-internal", "text": "发布 DELETED_SENTINEL", "occurredAt": "2026-01-04T00:00:00.000Z", "entities": [], "deleted": true }
+  ]
+}

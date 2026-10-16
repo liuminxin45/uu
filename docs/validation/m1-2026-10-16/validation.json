@@ -1,0 +1,85 @@
+{
+  "milestone": "M1",
+  "status": "passed",
+  "validatedOn": "2026-10-16",
+  "timezone": "Asia/Shanghai",
+  "project": "D:/Leo/uu",
+  "branch": "codex/m1-memory-protocol",
+  "node": "24.19.0",
+  "protocol": { "name": "uu.memory", "version": 1, "methods": 13 },
+  "verification": {
+    "command": "npm run verify",
+    "exitCode": 0,
+    "typecheck": "passed",
+    "build": "passed",
+    "tests": { "passed": 41, "failed": 0, "skipped": 0, "cancelled": 0, "durationMs": 21123.545 },
+    "durationIsPerformanceBenchmark": false,
+    "runtimeImportBoundary": "passed",
+    "runtimeModules": 3,
+    "runtimeDependencies": 0,
+    "compiledConsumerImport": "passed from isolated node_modules",
+    "compiledConsumerTypecheck": "passed with strict declarations and a rejected invalid parameter access",
+    "cliFilesystemPermissionTest": "passed with Node --permission; only this checkout readable, no file-write permission",
+    "npmPackDryRun": {
+      "status": "passed",
+      "entries": 9,
+      "unpackedBytes": 54049,
+      "files": [
+        "README.md", "build/src/index.d.ts", "build/src/index.js",
+        "build/src/protocol.d.ts", "build/src/protocol.js",
+        "build/src/session.d.ts", "build/src/session.js",
+        "docs/PROTOCOL.md", "package.json"
+      ]
+    }
+  },
+  "syntheticData": {
+    "fixture": "fixtures/demo.json",
+    "records": 6,
+    "visibleActiveRecords": 2,
+    "curatedEntries": 2,
+    "providerReadCapabilities": 9,
+    "writeMethods": 4,
+    "writeBehavior": "UNSUPPORTED_OPERATION, not-applied; no successful receipt",
+    "temporaryRootPolicy": "system-temp/uu-m1-* with explicit synthetic marker; cleanup after child close",
+    "redirectRejection": "junction test passed"
+  },
+  "verifiedScenarios": [
+    "canonical requests, version rejection, no legacy aliases, response correlation",
+    "principal/namespace/project/classification grants and immutable session epoch",
+    "Chinese recall, source and classification filters, versioned evidence and nodes",
+    "sources, entities, windows, explicit omissions, change pagination and tombstones",
+    "expired/unresolvable snapshot entries and no invented preferences",
+    "durable receipt shape, mutation target, version and idempotency correlation",
+    "initialization, cancellation, timeout, retained busy slot and drain deadline",
+    "slow/failed shutdown, end-hook errors and no automatic replay",
+    "unknown write outcomes with an in-memory fault provider; no persistence implementation",
+    "metadata diagnostics exclude query, body, caller abort reason and provider error text",
+    "CLI startup from unrelated cwd, explicit fixture, bounded stdin and denied path defaults"
+  ],
+  "acceptanceCorrections": [
+    "Declaration imports use compiled .js references; external type consumption is checked.",
+    "The external declaration compiler was initially stopped by a 10-second test harness limit; its bounded deadline is now 30 seconds and the final complete suite passed. Business request deadlines are unchanged."
+  ],
+  "productionBoundary": {
+    "productionMemoryDatabasesOpened": 0,
+    "productionDataWrites": 0,
+    "productionPathDefaults": false,
+    "phdRuntimeImported": false,
+    "phdInstallationChangedByM1": false,
+    "phdProcessStoppedByM1": false,
+    "legacyReaderImplemented": false,
+    "persistentWriterImplemented": false,
+    "legacyProtocolAliases": [],
+    "automaticFallback": false,
+    "dualWriter": false,
+    "fixtureOrCliPackagedInCore": false
+  },
+  "notClaimed": [
+    "M2 real legacy recall with PHD normally stopped",
+    "M3 durable storage, restart recovery or snapshot refresh",
+    "real-scale migration coverage or unchanged incremental reruns",
+    "formal installed PHD integration or production authority switch",
+    "OS sandboxing or CPU preemption for arbitrary same-process providers"
+  ],
+  "nextMilestone": "M2: migration-only read-only legacy reader, isolated from the normal package and mandatory deletion in M6"
+}
